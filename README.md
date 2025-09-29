@@ -1,0 +1,1 @@
+https://assets.deadlock-api.com/v2/heroes

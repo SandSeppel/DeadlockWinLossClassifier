@@ -1,0 +1,69 @@
+{"match_id": 39490691}
+"objectives": [
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 626,
+        "creep_damage": 2205,
+        "creep_damage_mitigated": null,
+        "player_damage": 1296,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 299,
+        "team_objective_id": 4, 
+        "team": 0
+      },
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 1276,
+        "creep_damage": 882,
+        "creep_damage_mitigated": null,
+        "player_damage": 2636,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 262,
+        "team_objective_id": 1,
+        "team": 1
+      },
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 904,
+        "creep_damage": 929,
+        "creep_damage_mitigated": null,
+        "player_damage": 2587,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 330,
+        "team_objective_id": 1,
+        "team": 0
+      },
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 899,
+        "creep_damage": 990,
+        "creep_damage_mitigated": null,
+        "player_damage": 2525,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 123,
+        "team_objective_id": 3,
+        "team": 1
+      },
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 815,
+        "creep_damage": 2295,
+        "creep_damage_mitigated": null,
+        "player_damage": 1219,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 124,
+        "team_objective_id": 4,
+        "team": 1
+      },
+      {
+        "legacy_objective_id": null,
+        "destroyed_time_s": 595,
+        "creep_damage": 1910,
+        "creep_damage_mitigated": null,
+        "player_damage": 1590,
+        "player_damage_mitigated": null,
+        "first_damage_time_s": 239,
+        "team_objective_id": 3,
+        "team": 0
+      },
+],
