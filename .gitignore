@@ -1,1 +1,4 @@
 *.parquet
+*.pth
+__pycache__/
+*.pyc

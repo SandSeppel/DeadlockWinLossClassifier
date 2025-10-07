@@ -1,37 +1,30 @@
 import json
 import pprint
 
-def get_lane_wins(objectives):
-    obj_ids = []
-    team_ids = []
-    time_destroyed = []
+def get_lane_wins(obj_ids, team_ids, time_destroyed):
+    allowed = {1, 3, 4}
+    per_lane = {}  # lane_id -> {team_id: time}
 
-    if objectives == None:
-        print("Incomplete data in get_lane_wins (no objectives)")
-        return
+    # Sammeln
+    for lane, team, t in zip(obj_ids, team_ids, time_destroyed):
+        if lane in allowed:
+            per_lane.setdefault(lane, {})[team] = t
 
-    for obj in range(len(objectives)):
-        obj_ids.append(objectives[obj]["team_objective_id"])
-        team_ids.append(objectives[obj]["team"])
-        time_destroyed.append(objectives[obj]["destroyed_time_s"])
+    def eff(x):
+        # 0 oder None behandeln wir als "nie zerstört" = sehr schlecht
+        return float("inf") if (x is None or x == 0) else x
 
-    obj_ids_set = list(set(obj_ids))
-    win_team = []
+    winners = []
+    for lane in sorted(allowed):  # feste Reihenfolge (1,3,4)
+        tmap = per_lane.get(lane, {})
+        t0, t1 = tmap.get(0), tmap.get(1)
+        e0, e1 = eff(t0), eff(t1)
 
-    for id in range(len(obj_ids_set)):
-        current_id = obj_ids_set[id]
-        current_objects = ([i for i, n in enumerate(obj_ids) if n == current_id])
-
-        if len(current_objects) < 2:
-            print("Incomplete data in fetch_obj_wins")
-            return
-
-        td1 = time_destroyed[current_objects[0]]
-        td2 = time_destroyed[current_objects[1]]
-
-        if time_destroyed[current_objects[0]] <= time_destroyed[current_objects[1]]:
-            win_team.append(team_ids[current_objects[1]])
+        if e0 < e1:
+            winners.append(0)
+        elif e1 < e0:
+            winners.append(1)
         else:
-            win_team.append(team_ids[current_objects[0]])
+            winners.append(-1)  # Gleichstand/keine Daten
 
-    return win_team
+    return winners

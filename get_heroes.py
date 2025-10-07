@@ -10,5 +10,9 @@ data = res.read()
 # Parse JSON
 heroes = json.loads(data.decode("utf-8"))
 
+hero_list = []
+
 for hero in heroes:
-    print(hero["id"])  # Access 'id' of each hero
+    hero_list.append(hero["id"])  # Access 'id' of each hero
+
+print(hero_list)

@@ -1,28 +1,31 @@
 import pandas as pd
 import numpy as np
 import torch
+import pickle
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
 
 # ========= Hyperparameter =========
 BATCH_SIZE   = 64
 NUM_EPOCHS   = 300
-LR           = 1e-3
-WEIGHT_DECAY = 1e-5
+LR           = 2e-5
+WEIGHT_DECAY = 1e-4
 THRESH       = 0.5  # Threshold für Multi-Label Prediction
-HDF_PATH     = 'training_data/data.h5'
+HDF_PATH     = 'data.pkl'
 HDF_KEY      = 'dataset'
 
 # ========= Modell =========
 num_heroes = 72  # Max-ID + 1 (IDs sind nicht fortlaufend)
-hero_embed_dim = 8
+hero_embed_dim = 24
 
 model = nn.Sequential(
     nn.Embedding(num_heroes, hero_embed_dim),
     nn.Flatten(),
-    nn.Linear(12 * hero_embed_dim, 16),  # 192 == hero_embed_dim * seq_len (siehe Assert unten)
+    nn.Linear(12 * hero_embed_dim, 128),  # 192 == hero_embed_dim * seq_len (siehe Assert unten)
     nn.ReLU(),
-    nn.Linear(16, 32),
+    nn.Linear(128, 64),
+    nn.ReLU(),
+    nn.Linear(64, 32),
     nn.ReLU(),
     nn.Linear(32, 16),
     nn.ReLU(),
@@ -31,13 +34,16 @@ model = nn.Sequential(
 
 # Platzhalter; wird unten mit pos_weight ersetzt
 loss_fn = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
+optimizer = torch.optim.Adam(model.parameters(), lr=LR)#,weight_decay=WEIGHT_DECAY)
 
 # ========= Daten laden =========
-df = pd.read_hdf(HDF_PATH, key=HDF_KEY)
+with open("data.pkl", "rb") as f:
+    df = pickle.load(f)
 
-X_list = df["x"].tolist()  # Liste von int-IDs pro Sample (fixe Länge)
-y_list = df["y"].tolist()  # Liste/Länge 3 mit 0/1
+match_ids = [block[1] for block in df]
+
+X_list = [block[0][0] for block in df]  # Liste von int-IDs pro Sample (fixe Länge)
+y_list = [block[0][1] for block in df]  # Liste/Länge 3 mit 0/1
 
 X_train = torch.tensor(X_list, dtype=torch.long)
 y_train = torch.tensor(y_list, dtype=torch.float32)
@@ -139,3 +145,5 @@ with torch.inference_mode():
     logits_all = model(X_train)
     probs_all  = torch.sigmoid(logits_all)
     preds_05   = (probs_all > THRESH).int()
+
+torch.save(model, f"models/Adam-{LR}-AQ.pth")
