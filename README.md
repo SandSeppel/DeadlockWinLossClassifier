@@ -10,3 +10,11 @@ pip install -r requirements.txt
 Note that you still have to install pytorch manually due to the installation being dependent on your system specs.
 https://pytorch.org/get-started/locally/
 
+#### Usage
+Download a pretrained model you want to use over at the release tab or train your own model with loop.py
+Edit the `config.cfg` file to path to your saved model
+
+Run `run.py`, and thats it!
+
+## Future of this project
+I will definately continue to tinker around with this project and add more information to feed into the model to get more accurate predictions of the game, feel free to contribute or add suggestions!
