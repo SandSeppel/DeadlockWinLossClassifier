@@ -41,3 +41,6 @@ while True:
 preds = model(torch.IntTensor(arr).unsqueeze(0))
 
 print(f"Probability predictions: {torch.sigmoid(preds.squeeze(0))}")
+print("These are the win probabilties for each lane, 1 = 100%, 0 = 0%")
+
+input()
