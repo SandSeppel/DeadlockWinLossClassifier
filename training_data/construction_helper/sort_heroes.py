@@ -1,4 +1,3 @@
-# import fetch_match_id
 import pprint
 
 from itertools import chain

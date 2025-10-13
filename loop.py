@@ -15,7 +15,7 @@ HDF_PATH     = 'data.pkl'
 HDF_KEY      = 'dataset'
 
 # ========= Modell =========
-num_heroes = 72  # Max-ID + 1 (IDs sind nicht fortlaufend)
+num_heroes = 75  # Max-ID + 1 (IDs sind nicht fortlaufend)
 hero_embed_dim = 24
 
 model = nn.Sequential(
